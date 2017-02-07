@@ -1,5 +1,6 @@
 #include "PeakDetector.h"
 
+
 PeakDetector::PeakDetector() :
 lastValue(0),
 currentVectorIndex(0),
@@ -15,11 +16,11 @@ PeakDetector::~PeakDetector() {
 }
 
 bool PeakDetector::addValue(int value) {
-  int value = sensorValue - lastValue;
-  lastValue = sensorValue;
-  Serial.println(value);
+  int diffValue = value - lastValue;
+  lastValue = value;
+  Serial.println(diffValue);
 
-  updateVector(value);
+  updateVector(diffValue);
 
   int vector = getVector();
   updateFrontLength(vector);
@@ -79,7 +80,7 @@ void PeakDetector::updateVector(int value) {
   currentVectorIndex = (currentVectorIndex + 1) % VECTOR_SIZE;
 }
 
-void PeakDetector::checkPeak() {
+bool PeakDetector::checkPeak() {
   if (frontIncreased && currentFrontLength <= -FRONT_LENGTH_THRESHOLD) {
     // PEAK!
     Serial.println("Peak detected");

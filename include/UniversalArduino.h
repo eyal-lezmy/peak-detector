@@ -7,26 +7,31 @@
 
 typedef unsigned char byte;
 
-class Serial {
+class Serial_ {
 
 public:
-  static void print(const char *message) {
+  void print(const char *message) {
     printf("%s", message);
   }
 
-  static void println(const char *message) {
+  void println(const char *message) {
     printf("%s\n", message);
   }
-  static void print(int value) {
+
+  void print(int value) {
     printf("%d", value);
   }
 
-  static void println(int value) {
+  void println(int value) {
     printf("%d\n", value);
   }
 
-
 };
+
+extern Serial_ Serial;
+
+int abs(int value);
+int max(int value1, int value2);
 
 #endif //defined(_WIN32) || defined(__APPLE__) || defined(__linux__)
 

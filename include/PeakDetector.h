@@ -15,7 +15,7 @@ public:
   PeakDetector();
   ~PeakDetector();
 
-  void addValue(int value);
+  bool addValue(int value);
 
 private:
   int lastValue;
@@ -34,7 +34,7 @@ private:
   int getVector();
   void updateFrontLength(int vector);
   void updateVector(int value);
-  void checkPeak();
+  bool checkPeak();
   void updateLastMaxVectors(int value);
   int getLastMaxVectorsAverage();
   bool isVectorBigEnough();
@@ -42,4 +42,4 @@ private:
 
 };
 
-#endif
+#endif // __PEAK_DETECTOR_H__

@@ -1,9 +1,18 @@
 project(PeakDetector)
 
-add_executable(
-  peak-detector-test
-  src/UniversalArduino.h
-  src/PeakDetector.h
-  src/PeakDetector.cpp
-  test/main.cpp
+set(LIBRARY_OUTPUT_PATH lib/)
+
+include_directories(include)
+
+file(
+  GLOB_RECURSE
+  source_files
+  src/*
+  include/*
+)
+
+add_library(
+  PeakDetector
+  STATIC
+  ${source_files}
 )
