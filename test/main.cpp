@@ -8,13 +8,14 @@ int main(int argc, char const *argv[]) {
 
   int arraySize = sizeof(values)/sizeof(*values);
   for (size_t i = 0; i < arraySize; i++) {
+
+    printf("%lu Adding value %d\n", i+2, values[i]);
     bool isPeakDetected = peakDetector.addValue(values[i]);
-    printf("%d", values[i]);
 
     if(isPeakDetected) {
-      printf("PEAK detected\n");
+      printf("PEAK detected!!!!!!!!!!!!!!!!\n\n");
     } else {
-      printf("/n");
+      printf("\n");
     }
   }
 
