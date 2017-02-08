@@ -7,7 +7,7 @@
 #define LAST_MAX_VECTORS_SIZE 5
 #define FRONT_LENGTH_THRESHOLD 3 // The minimum threshold to consider a front as ascending or descending
 #define MINIMUM_VECTOR_SIZE 2 // Minimum size unless we ignore the vector
-
+#define MAX_VECTOR_THRESHOLD_RATIO 0.5 //Minimum ratio of the value maxVector/maxVectorAverage of a vector to be considered as a front increase
 
 class PeakDetector {
 
@@ -18,6 +18,7 @@ public:
   bool addValue(int value);
 
 private:
+  byte valueIndex; // Variable used to dismiss analysis until the dataset reached a mimum size
   int lastValue;
   int currentVector[VECTOR_SIZE]; // The last 5 sensor values
   byte currentVectorIndex; // The position of the last sensor value added into the vector

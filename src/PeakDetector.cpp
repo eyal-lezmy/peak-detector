@@ -2,6 +2,7 @@
 
 
 PeakDetector::PeakDetector() :
+valueIndex(0),
 lastValue(0),
 currentVectorIndex(0),
 maxVector(0),
@@ -22,6 +23,11 @@ bool PeakDetector::addValue(int value) {
 
   updateVector(diffValue);
 
+  if (valueIndex < VECTOR_SIZE) {
+    valueIndex++;
+    return false;
+  }
+
   int vector = getVector();
   updateFrontLength(vector);
 
@@ -33,13 +39,17 @@ void PeakDetector::resetVector() {
   for (int i=0; i<VECTOR_SIZE; i++) {
     currentVector[i] = 0;
   }
+  currentVectorIndex = 0;
+  valueIndex = 0;
+  frontIncreased = false;
 }
 
 void PeakDetector::resetLastMaxVector() {
-  Serial.println("resetVector");
-  for (int i=0; i<VECTOR_SIZE; i++) {
-    currentVector[i] = 0;
+  //Serial.println("resetLastMaxVector");
+  for (int i=0; i<LAST_MAX_VECTORS_SIZE; i++) {
+    lastMaxVector[i] = 0;
   }
+  lastMaxVectorIndex = 0;
 }
 
 int PeakDetector::getVector() {
@@ -56,7 +66,8 @@ void PeakDetector::updateFrontLength(int vector) {
     return;
   }
   // If the vector has a different sign than the currentFrontLength, we reset the length
-  if (vector*currentFrontLength > 0) {
+  if (vector*currentFrontLength < 0) {
+    //Serial.println("vector and frontLength not same sign, we reset the length");
     currentFrontLength = 0;
     maxVector = 0;
     return;
@@ -81,7 +92,7 @@ void PeakDetector::updateVector(int value) {
 }
 
 bool PeakDetector::checkPeak() {
-  if (frontIncreased && currentFrontLength <= -FRONT_LENGTH_THRESHOLD) {
+  if (frontIncreased && (currentFrontLength <= -FRONT_LENGTH_THRESHOLD)) {
     // PEAK!
     Serial.println("Peak detected");
     updateLastMaxVectors(maxVector);
@@ -114,9 +125,14 @@ int PeakDetector::getLastMaxVectorsAverage() {
       vectorCount++;
     }
   }
+
+  if (vectorCount == 0) {
+    return 0;
+  }
+
   return vectorSum/vectorCount;
 }
 
 bool PeakDetector::isVectorBigEnough() {
-  return maxVector > (getLastMaxVectorsAverage() / 2);
+  return maxVector > (getLastMaxVectorsAverage() * MAX_VECTOR_THRESHOLD_RATIO);
 }
