@@ -19,8 +19,9 @@ PeakDetector::~PeakDetector() {
 bool PeakDetector::addValue(int value) {
   int diffValue = value - lastValue;
   lastValue = value;
-  Serial.println(diffValue);
 
+  //Serial.print("diff ");
+  //Serial.println(diffValue);
   updateVector(diffValue);
 
   if (valueIndex < VECTOR_SIZE) {
@@ -29,13 +30,16 @@ bool PeakDetector::addValue(int value) {
   }
 
   int vector = getVector();
+  //Serial.print("Vector ");
+  //Serial.println(vector);
+
   updateFrontLength(vector);
 
   return checkPeak();
 }
 
 void PeakDetector::resetVector() {
-  Serial.println("resetVector");
+  //Serial.println("resetVector");
   for (int i=0; i<VECTOR_SIZE; i++) {
     currentVector[i] = 0;
   }
@@ -63,6 +67,7 @@ int PeakDetector::getVector() {
 void PeakDetector::updateFrontLength(int vector) {
   // If the vector is not enough big to be considered, we ignore it
   if (abs(vector) < MINIMUM_VECTOR_SIZE) {
+    //Serial.println("vector too small");
     return;
   }
   // If the vector has a different sign than the currentFrontLength, we reset the length
@@ -77,12 +82,12 @@ void PeakDetector::updateFrontLength(int vector) {
   if (vector > 0) {
     currentFrontLength++;
     maxVector = max(vector, maxVector);
-    Serial.println("Increase length");
-    Serial.println(currentFrontLength);
+    //Serial.print("Increase length");
+    //Serial.println(currentFrontLength);
   } else if (vector < 0) {
     currentFrontLength--;
-    Serial.println("Decrease length");
-    Serial.println(currentFrontLength);
+    //Serial.print("Decrease length");
+    //Serial.println(currentFrontLength);
   }
 }
 
@@ -94,7 +99,7 @@ void PeakDetector::updateVector(int value) {
 bool PeakDetector::checkPeak() {
   if (frontIncreased && (currentFrontLength <= -FRONT_LENGTH_THRESHOLD)) {
     // PEAK!
-    Serial.println("Peak detected");
+    //Serial.println("Peak detected");
     updateLastMaxVectors(maxVector);
     resetVector();
     return true;
@@ -103,8 +108,10 @@ bool PeakDetector::checkPeak() {
   if (currentFrontLength >= FRONT_LENGTH_THRESHOLD) {
     if (isVectorBigEnough()) {
       frontIncreased = true;
-      Serial.println("front increased");
+      //Serial.println("front increased");
     } else {
+      //Serial.print("vector not big enough, reseting");
+      //Serial.println(maxVector);
       resetVector();
     }
   }
