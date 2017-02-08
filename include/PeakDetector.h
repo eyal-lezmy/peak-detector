@@ -11,6 +11,8 @@
 
 class PeakDetector {
 
+//TODO good results, check the micro peak handling in 205 as it seems to signal it as a peak, but it ignore the big peak coming right after in 211
+
 public:
   PeakDetector();
   ~PeakDetector();
