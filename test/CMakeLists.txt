@@ -2,7 +2,10 @@ project(PeakDetectorTest)
 
 set(EXECUTABLE_OUTPUT_PATH bin/)
 
-include_directories(../include)
+include_directories(
+  ../peak-detector
+  ../universal-arduino/include
+)
 
 link_directories(../lib)
 

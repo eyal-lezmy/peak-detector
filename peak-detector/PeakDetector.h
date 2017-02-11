@@ -1,7 +1,7 @@
 #ifndef __PEAK_DETECTOR_H__
 #define __PEAK_DETECTOR_H__
 
-#include "UniversalArduino.h"
+#include "Arduino.h"
 
 #define VECTOR_SIZE 5
 #define LAST_MAX_VECTORS_SIZE 5
