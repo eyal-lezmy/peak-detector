@@ -7,7 +7,7 @@
 #define LAST_MAX_VECTORS_SIZE 5
 #define FRONT_LENGTH_THRESHOLD 3 // The minimum threshold to consider a front as ascending or descending
 #define MINIMUM_VECTOR_SIZE 2 // Minimum size unless we ignore the vector
-#define MAX_VECTOR_THRESHOLD_RATIO 0.5 //Minimum ratio of the value maxVector/maxVectorAverage of a vector to be considered as a front increase
+#define MAX_PEAK_INTENSITY_THRESHOLD_RATIO 0.5f //Minimum ratio of the value maxVector/maxVectorAverage of a vector to be considered as a front increase
 
 class PeakDetector {
 
@@ -24,23 +24,28 @@ private:
   int lastValue;
   int currentVector[VECTOR_SIZE]; // The last 5 sensor values
   byte currentVectorIndex; // The position of the last sensor value added into the vector
-  int maxVector; // The maximum vector size for the current ascending front
 
-  int lastMaxVector[LAST_MAX_VECTORS_SIZE]; // Maximum vector during the last 5 ascending fronts
-  byte lastMaxVectorIndex; // The position of the last sensor value added into the vector
+  int maxPeakIntensity; // The maximum vector size for the current ascending front
+  int currentPeakIntensity[FRONT_LENGTH_THRESHOLD]; // The sum of the last 3 vectors value
+  int currentPeakIntensityIndex;
 
-  int currentFrontLength; // The size of the current front (ascending or descending)
+  int lastMaxPeakIntensity[LAST_MAX_VECTORS_SIZE]; // Maximum vector during the last 5 ascending fronts
+  byte lastMaxPeakIntensityIndex; // The position of the last sensor value added into the vector
+
+  int currentFrontLength; // The size of the current front, represents the number of times we observe the value increasing or decreasing
   bool frontIncreased;
 
   void resetVector();
-  void resetLastMaxVector();
+  void resetlastMaxPeakIntensity();
   int getVector();
   void updateFrontLength(int vector);
   void updateVector(int value);
   bool checkPeak();
-  void updateLastMaxVectors(int value);
-  int getLastMaxVectorsAverage();
-  bool isVectorBigEnough();
+  int getCurrentPeakIntensity();
+  void updateCurrentPeakIntensity(int vector);
+  void updatelastMaxPeakIntensity(int value);
+  int getlastMaxPeakIntensityAverage();
+  bool isMaxPeakIntensityBigEnough();
   void peak();
 
 };
