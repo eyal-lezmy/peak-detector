@@ -22,4 +22,4 @@ When the detector find an increasing front followed by a decreasing front, a pea
 
 ## Run the test
     cd test/bin
-    ./peak-detector-tes
+    ./peak-detector-test
