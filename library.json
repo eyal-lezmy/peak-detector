@@ -1,0 +1,28 @@
+{
+  "name": "peak-detector",
+  "keywords": "peak-detector, peak, detection, sensor, signal",
+  "description": "Arduino Library to detect peaks from a signal",
+  "repository":
+  {
+    "type": "git",
+    "url": "git@github.com:eyal-lezmy/peak-detector.git"
+  },
+  "authors":
+  [
+    {
+      "name": "Eyal Lezmy",
+      "email": "eyal@lezmy.fr",
+      "url": "http://eyal.fr",
+      "maintainer": true
+    }
+  ],
+  "export": {
+    "include":
+    [
+        "peak-detector/*"
+    ]
+},
+  "version": "1.0.0",
+  "frameworks": "arduino",
+  "platforms": "*"
+}
