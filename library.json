@@ -5,7 +5,7 @@
   "repository":
   {
     "type": "git",
-    "url": "git@github.com:eyal-lezmy/peak-detector.git"
+    "url": "https://github.com/eyal-lezmy/peak-detector.git"
   },
   "authors":
   [
@@ -17,11 +17,8 @@
     }
   ],
   "export": {
-    "include":
-    [
-        "peak-detector/*"
-    ]
-},
+    "include": "peak-detector"
+  },
   "version": "1.0.0",
   "frameworks": "arduino",
   "platforms": "*"
